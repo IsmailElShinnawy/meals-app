@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import './category_item.dart';
-import './dummy_data.dart';
+import '../widgets/category_item.dart';
+import '../dummy_data.dart';
 
 class CategoriesScreen extends StatelessWidget {
   @override
@@ -11,16 +11,15 @@ class CategoriesScreen extends StatelessWidget {
     // for performance or for not knowing the # of items
     return Scaffold(
       appBar: AppBar(title: const Text('Meals App')),
-      body: GridView(
+      body: GridView.builder(
+        itemBuilder: (ctx, idx) => CategoryItem(
+          DUMMY_CATEGORIES[idx].id,
+          DUMMY_CATEGORIES[idx].title,
+          DUMMY_CATEGORIES[idx].color,
+        ),
+        itemCount: DUMMY_CATEGORIES.length,
         padding: const EdgeInsets.all(25),
-        children: DUMMY_CATEGORIES
-            .map((cat) => CategoryItem(
-                  cat.id,
-                  cat.title,
-                  cat.color,
-                ))
-            .toList(),
-        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
           maxCrossAxisExtent: 200, // width of column
           childAspectRatio: 3 / 2, // aspect ratio for with 200 width 300 height
           crossAxisSpacing: 20, // horizontal spacing
